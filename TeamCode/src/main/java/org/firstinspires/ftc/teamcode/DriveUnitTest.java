@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.Servo;
  * Created by CCA on 5/15/2018.
  */
 
-public class driveUnitTest extends LinearOpMode {
+public class DriveUnitTest extends LinearOpMode {
 
     Drive drive;
     Robot sully;
