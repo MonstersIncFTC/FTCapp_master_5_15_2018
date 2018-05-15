@@ -1,8 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.IntegratingGyroscope;
 import com.qualcomm.robotcore.hardware.Servo;
 
 /**
@@ -16,10 +16,10 @@ public class Robot extends Object {
 
     DcMotor frontRight, frontLeft, backRight, backLeft, liftMotor;
     Servo rightArm, leftArm, jewelRotor, jewelArm;
-    IntegratingGyroscope gyro;
+    ModernRoboticsI2cGyro gyro;
     ColorSensor color;
 
-    public Robot(DcMotor fR, DcMotor fL, DcMotor bR, DcMotor bL, DcMotor lM, Servo rA, Servo lA, Servo jR, Servo jA, IntegratingGyroscope g, ColorSensor c) {
+    public Robot(DcMotor fR, DcMotor fL, DcMotor bR, DcMotor bL, DcMotor lM, Servo rA, Servo lA, Servo jR, Servo jA, ModernRoboticsI2cGyro g, ColorSensor c) {
         frontRight = fR;
         frontLeft = fL;
         backRight = bR;
