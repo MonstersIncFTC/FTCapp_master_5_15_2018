@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 /**
- * Created by CCA on 5/15/2018.
+ * Created by JRC on 5/15/2018.
  */
 
 public class Drive extends Object {

@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 /**
- * Created by CCA on 5/15/2018.
+ * Created by JRC on 5/15/2018.
  *
  * Robot contains all of the hardware objects for Sully.  This is passed to any methods in classes
  * that need hardware access
