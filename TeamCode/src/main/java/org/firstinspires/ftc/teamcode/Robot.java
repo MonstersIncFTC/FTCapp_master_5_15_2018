@@ -19,6 +19,23 @@ public class Robot extends Object {
     ModernRoboticsI2cGyro gyro;
     ColorSensor color;
 
+    final public double JEWEL_CENTER = 0.88;
+    final public double JEWEL_OFFCENTER = 0.86;   // for trying a second read of jewel color
+    final public double JEWEL_LEFT = 1.00;
+    final public double JEWEL_RIGHT = 0.76;
+    final public double JEWEL_UP = 0.00;
+    final public double JEWEL_DOWN = 0.57;
+
+    final public double RIGHT_ARM_IN = -0.50;
+    final public double LEFT_ARM_IN = 1.00;
+    final public double RIGHT_ARM_OUT = 0.00;
+    final public double LEFT_ARM_OUT = 0.95;
+    final public double RIGHT_ARM_ACTIVE = 0.05;
+    final public double LEFT_ARM_ACTIVE = 0.96;
+
+    final public int LIFT_UP = (int)(1170*6/(0.5*3.14159));
+    final public int LIFT_DOWN = 0;
+
     public Robot(DcMotor fR, DcMotor fL, DcMotor bR, DcMotor bL, DcMotor lM, Servo rA, Servo lA, Servo jR, Servo jA, ModernRoboticsI2cGyro g, ColorSensor c) {
         frontRight = fR;
         frontLeft = fL;

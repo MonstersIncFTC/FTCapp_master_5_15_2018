@@ -35,6 +35,9 @@ public class sullyTelop extends OpMode {
     //lift values
     private final double LIFT_UP = 0.75;
     private final double LIFT_DOWN = -0.75;
+    private final double JEWEL_UP = 0.02;
+    private final double JEWEL_DOWN = 0.57;
+    private final double JEWEL_CENTER = 0.88;
 
     // servo values
     // grabber arms values
@@ -99,8 +102,8 @@ public class sullyTelop extends OpMode {
         //jewelKnocker int
        // jewelArm.setPosition(jewelArmUp);
        // jewelRotor.setPosition(jewelMiddle);
-        jewelArm.setPosition(jewelArmPosition);
-        jewelRotor.setPosition(jewelRotorPosition);
+        jewelArm.setPosition(JEWEL_UP);
+        jewelRotor.setPosition(JEWEL_CENTER);
     }
 
     /*
@@ -113,7 +116,7 @@ public class sullyTelop extends OpMode {
     // run until the end of the match (driver presses STOP)
     @Override
     public void loop(){
-        runtime.reset();
+        //runtime.reset();
         // left stick controls direction
         // right stick controls rotation
 
@@ -198,7 +201,7 @@ public class sullyTelop extends OpMode {
         }
 
         // Jewel Knocker game pad controls
-        if (gamepad1.x){
+        /*if (gamepad1.x){
             jewelRotorPosition += 0.01;
         }
 
@@ -213,6 +216,14 @@ public class sullyTelop extends OpMode {
 
         jewelArm.setPosition(jewelArmPosition);
         jewelRotor.setPosition(jewelRotorPosition);
+        */
+
+        if (gamepad1.x) {
+            jewelArm.setPosition(JEWEL_UP);
+        }
+        else if (gamepad1.b) {
+            jewelArm.setPosition(JEWEL_DOWN);
+        }
 
         //Debugging
 

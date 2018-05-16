@@ -63,7 +63,6 @@ public class Drive extends Object {
         setPower(power);
 
         while (sully.frontLeft.isBusy() && sully.frontRight.isBusy()) {
-            ;
         }
 
         stopBot();
@@ -91,7 +90,6 @@ public class Drive extends Object {
         setPower(power);
 
         while (sully.frontLeft.isBusy() && sully.frontRight.isBusy()) {
-            ;
         }
 
         if (firstTime) {
@@ -127,12 +125,68 @@ public class Drive extends Object {
         setPower(power);
 
         while (sully.frontLeft.isBusy() && sully.frontRight.isBusy()) {
-            ;
         }
 
         stopBot();
     }
 
+    public void raiseJewelArm() {
+        sully.jewelArm.setPosition(sully.JEWEL_UP);
+    }
 
+    public void lowerJewelArm() {
+        sully.jewelArm.setPosition(sully.JEWEL_DOWN);
+    }
+
+    public void puttRight() {
+        sully.jewelRotor.setPosition(sully.JEWEL_RIGHT);
+    }
+
+    public void puttLeft() {
+        sully.jewelRotor.setPosition(sully.JEWEL_LEFT);
+    }
+
+    public void puttCenter() {
+        sully.jewelRotor.setPosition(sully.JEWEL_CENTER);
+    }
+
+    public void puttAdjust() {
+        sully.jewelRotor.setPosition(sully.JEWEL_OFFCENTER);
+    }
+
+    public void armsIn() {
+        sully.rightArm.setPosition(sully.RIGHT_ARM_IN);
+        sully.leftArm.setPosition(sully.LEFT_ARM_IN);
+    }
+
+    public void armsOut() {
+        sully.rightArm.setPosition(sully.RIGHT_ARM_OUT);
+        sully.leftArm.setPosition(sully.LEFT_ARM_OUT);
+    }
+
+    public void armsActive() {
+        sully.rightArm.setPosition(sully.RIGHT_ARM_ACTIVE);
+        sully.leftArm.setPosition(sully.LEFT_ARM_ACTIVE);
+    }
+
+    public void liftUp() {
+        sully.liftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        sully.liftMotor.setTargetPosition(sully.LIFT_UP);
+        sully.liftMotor.setPower(0.75);
+        while(sully.liftMotor.isBusy()) {
+            opmode.idle();
+        }
+        sully.liftMotor.setPower(0);
+    }
+
+    public void liftDown() {
+        sully.liftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        sully.liftMotor.setTargetPosition(sully.LIFT_DOWN);
+        sully.liftMotor.setPower(0.75);
+        while(sully.liftMotor.isBusy()) {
+            opmode.idle();
+        }
+        sully.liftMotor.setPower(0);
+    }
 }
 

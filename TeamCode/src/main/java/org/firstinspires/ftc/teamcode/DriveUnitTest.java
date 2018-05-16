@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -10,35 +11,26 @@ import com.qualcomm.robotcore.hardware.Servo;
  * Created by JRC on 5/15/2018.
  */
 
+@Autonomous(name="DriveUnitTest", group="Autonomous")
 public class DriveUnitTest extends LinearOpMode {
 
-    Drive drive;
-    Robot sully;
+    private Drive drive;
+    private Robot sully;
 
-    DcMotor frontRight, frontLeft, backRight, backLeft, liftMotor;
-    Servo rightArm, leftArm, jewelRotor, jewelArm;
-    ModernRoboticsI2cGyro gyro;
-    ColorSensor color;
+    private DcMotor frontRight, frontLeft, backRight, backLeft, liftMotor;
+    private Servo rightArm, leftArm, jewelRotor, jewelArm;
+    private ModernRoboticsI2cGyro gyro;
+    private ColorSensor color;
 
-    final private double JEWEL_CENTER = 0.85;
-    final private double JEWEL_LEFT = 0.70;
-    final private double JEWEL_RIGHT = 1.00;
-    final private double JEWEL_UP = 0.50;
-    final private double JEWEL_DOWN = 0.00;
 
-    final private double RIGHT_ARM_IN = 0.30;
-    final private double LEFT_ARM_IN = 0.30;
-    final private double RIGHT_ARM_OUT = 0.70;
-    final private double LEFT_ARM_OUT = 0.70;
 
-    final private int LIFT_UP = 1000;
-    final private int LIFT_DOWN = 0;
 
     public void initialize() {
         frontRight = hardwareMap.dcMotor.get("frontRight");
         frontLeft = hardwareMap.dcMotor.get("frontLeft");
         backRight = hardwareMap.dcMotor.get("backRight");
         backLeft = hardwareMap.dcMotor.get("backLeft");
+        liftMotor = hardwareMap.dcMotor.get("mainLift");
         rightArm = hardwareMap.servo.get("rightArm");
         leftArm = hardwareMap.servo.get("leftArm");
         jewelArm = hardwareMap.servo.get("jewelArm");
@@ -46,13 +38,18 @@ public class DriveUnitTest extends LinearOpMode {
         gyro = (ModernRoboticsI2cGyro)hardwareMap.gyroSensor.get("gyro");
         color = hardwareMap.colorSensor.get("color");
 
-        jewelRotor.setPosition(JEWEL_CENTER);
-        jewelArm.setPosition(JEWEL_UP);
-        rightArm.setPosition(RIGHT_ARM_IN);
-        leftArm.setPosition(LEFT_ARM_IN);
 
-        gyro.calibrate();
-        while (gyro.isCalibrating() && opModeIsActive()) {
+
+        sully = new Robot(frontRight,frontLeft,backRight,backLeft,liftMotor,rightArm,leftArm,jewelRotor,jewelArm,gyro,color);
+        drive = new Drive(sully, this);
+
+        jewelRotor.setPosition(sully.JEWEL_CENTER);
+        jewelArm.setPosition(sully.JEWEL_UP);
+        leftArm.setPosition(sully.LEFT_ARM_IN);
+        rightArm.setPosition(sully.RIGHT_ARM_IN);
+
+        sully.gyro.calibrate();
+        while (sully.gyro.isCalibrating() && opModeIsActive()) {
             idle();
         }
 
@@ -60,8 +57,45 @@ public class DriveUnitTest extends LinearOpMode {
     @Override
     public void runOpMode() {
         initialize();
+        waitForStart();
 
+        /*drive.raiseJewelArm();
+        sleep(500);
+        drive.lowerJewelArm();
+        sleep(500);
 
+        drive.puttLeft();
+        sleep(500);
+        drive.puttCenter();
+        sleep(500);
+        drive.puttAdjust();
+        sleep(500);
+        drive.puttRight();
+        sleep(500);
+
+        drive.armsActive();
+        sleep(500);
+        drive.armsOut();
+        sleep(500);
+
+        drive.liftUp();
+        sleep(2000);
+        drive.liftDown();
+        sleep(500);
+
+        drive.straightForDistance(24,0.75);
+        sleep(500);
+        drive.straightForDistance(-24,0.75);
+        sleep(500);
+        drive.strafe(24, 0.75);
+        sleep(500);
+        drive.strafe(-24,0.75);
+        sleep(500);
+
+        drive.turnForDegrees(90,0.75);
+        sleep(500);
+        drive.turnForDegrees(-90, 0.75);
+        sleep(500);*/
 
     }
 }
