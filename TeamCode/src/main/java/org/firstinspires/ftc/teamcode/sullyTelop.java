@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -31,6 +32,8 @@ public class sullyTelop extends OpMode {
     public Servo rightArm;
     public Servo jewelRotor;
     public Servo jewelArm;
+
+    public ModernRoboticsI2cGyro gyro;
 
     //lift values
     private final double LIFT_UP = 0.75;
@@ -104,6 +107,10 @@ public class sullyTelop extends OpMode {
        // jewelRotor.setPosition(jewelMiddle);
         jewelArm.setPosition(JEWEL_UP);
         jewelRotor.setPosition(JEWEL_CENTER);
+
+        gyro = (ModernRoboticsI2cGyro)hardwareMap.gyroSensor.get("gyro");
+
+        gyro.calibrate();
     }
 
     /*
@@ -234,12 +241,25 @@ public class sullyTelop extends OpMode {
         telemetry.addData("f right pwr","front right pwr: "+String.format("%.2f",FrontRight));
         telemetry.addData("b right pwr","back right pwr: "+String.format("%.2f",BackRight));
         telemetry.addData("b left pwr","back left pwr: "+String.format("%.2f",BackLeft));
-        telemetry.addData("leftArm ", "position" + String.format("%.2f", leftArmPos));
-        telemetry.addData("rightArm ", "position" + String.format("%.2f", rightArmPos));
-        telemetry.addData("jewel rotor ", "position" + String.format("%.2f", jewelRotorPosition));
-        telemetry.addData("jewel arm ", "position" + String.format("%.2f", jewelArmPosition));
-        telemetry.addData("liftUp","position" + String.format("%.2f", LIFT_UP));
-        telemetry.addData("liftDown","position" + String.format("%.2f",LIFT_DOWN));
+        telemetry.addData("leftArm ", "position: " + String.format("%.2f", leftArmPos));
+        telemetry.addData("rightArm ", "position: " + String.format("%.2f", rightArmPos));
+        telemetry.addData("gyro", "angle: " + String.format("%.2f", gyro.getIntegratedZValue()));
+
+        // Wheel debugging.  Turn controller 2 counter-clockwise 45 degrees to activate wheels
+        // individually
+
+        if (gamepad2.dpad_down) {
+            motorBackRight.setPower(0.75);
+        }
+        if (gamepad2.dpad_up) {
+            motorFrontLeft.setPower(0.75);
+        }
+        if (gamepad2.dpad_left) {
+            motorBackLeft.setPower(0.75);
+        }
+        if (gamepad2.dpad_right) {
+            motorFrontRight.setPower(0.75);
+        }
 
     }
 
