@@ -65,6 +65,7 @@ public class Drive extends Object {
         setPower(power);
 
         while (sully.frontLeft.isBusy() && sully.frontRight.isBusy()) {
+            opmode.idle();
         }
 
         stopBot();
@@ -85,14 +86,15 @@ public class Drive extends Object {
         setDriveMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         /* in original, all setTargetPositions were opposite current */
-        sully.frontLeft.setTargetPosition(targetPosition);
-        sully.backLeft.setTargetPosition(targetPosition);
-        sully.backRight.setTargetPosition(-targetPosition);
-        sully.frontRight.setTargetPosition(-targetPosition);
+        sully.frontLeft.setTargetPosition(-targetPosition);
+        sully.backLeft.setTargetPosition(-targetPosition);
+        sully.backRight.setTargetPosition(targetPosition);
+        sully.frontRight.setTargetPosition(targetPosition);
 
         setPower(power);
 
         while (sully.frontLeft.isBusy() && sully.frontRight.isBusy()) {
+            opmode.idle();
         }
 
         if (firstTime) {
@@ -121,10 +123,10 @@ public class Drive extends Object {
         setDriveMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         /* in original, all setTargetPositions() were opposite current values */
-        sully.frontLeft.setTargetPosition(-targetPosition);
-        sully.backLeft.setTargetPosition(targetPosition);
-        sully.backRight.setTargetPosition(-targetPosition);
-        sully.frontRight.setTargetPosition(targetPosition);
+        sully.frontLeft.setTargetPosition(targetPosition);
+        sully.backLeft.setTargetPosition(-targetPosition);
+        sully.backRight.setTargetPosition(targetPosition);
+        sully.frontRight.setTargetPosition(-targetPosition);
 
         setPower(power);
 

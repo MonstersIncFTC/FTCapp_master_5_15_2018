@@ -44,10 +44,11 @@ public class sullyTelop extends OpMode {
 
     // servo values
     // grabber arms values
-    double leftArmPos = 0.93, rightArmPos = 0.93;
-    //private static final double Open_Servo =  0.3 ;
-    //private static final double Close_Servo =  0.7 ;
-
+    double leftArmPos = 0.80, rightArmPos = 0.93;
+    private static final double rightOpen_Servo =  0.89 ;
+    private static final double rightClose_Servo =  0.85;
+    private static final double leftOpen_Servo =  0.90 ;
+    private static final double leftClose_Servo =  1.00;
     // jewel knocker values
     private final double jewelArmLeft = 1.0;
     private final double jewelArmRight = 0.76;
@@ -70,10 +71,10 @@ public class sullyTelop extends OpMode {
         motorBackRight = hardwareMap.get(DcMotor.class, "backRight");
         motorBackLeft = hardwareMap.get(DcMotor.class, "backLeft");
        // drive train int
-        motorFrontRight.setDirection(DcMotor.Direction.REVERSE);
+        motorFrontRight.setDirection(DcMotor.Direction.FORWARD);
         motorFrontLeft.setDirection(DcMotor.Direction.REVERSE);
         motorBackLeft.setDirection(DcMotor.Direction.REVERSE);
-        motorBackRight.setDirection(DcMotor.Direction.REVERSE);
+        motorBackRight.setDirection(DcMotor.Direction.FORWARD);
 
         // lift hm
         motorMainLift = hardwareMap.get(DcMotor.class, "mainLift");
@@ -133,10 +134,10 @@ public class sullyTelop extends OpMode {
 
         // holonomic formulas
 
-        float FrontLeft = -gamepad1LeftY - gamepad1LeftX - gamepad1RightX;
-        float FrontRight = gamepad1LeftY - gamepad1LeftX - gamepad1RightX;
+        float FrontLeft = gamepad1LeftY - gamepad1LeftX - gamepad1RightX;
+        float FrontRight = gamepad1LeftY + gamepad1LeftX + gamepad1RightX;
         float BackRight = gamepad1LeftY + gamepad1LeftX - gamepad1RightX;
-        float BackLeft = -gamepad1LeftY + gamepad1LeftX - gamepad1RightX;
+        float BackLeft = gamepad1LeftY - gamepad1LeftX + gamepad1RightX;
 
         //lift controls
 
@@ -176,17 +177,17 @@ public class sullyTelop extends OpMode {
         rightArm.setPosition(rightArmPos);
 
         if (gamepad1.right_bumper){
-            rightArmPos -= 0.01;
+            rightArmPos = rightOpen_Servo;
+            leftArmPos = leftOpen_Servo;
         }
 
         if (gamepad1.left_bumper){
-            leftArmPos += 0.01;
+            rightArmPos = rightClose_Servo;
+            leftArmPos = leftClose_Servo;
+
         }
 
-        if (gamepad1.dpad_up) {
-            leftArmPos = 0.93;
-            rightArmPos = 0.93;
-        }
+
 
 
 
@@ -243,7 +244,7 @@ public class sullyTelop extends OpMode {
         telemetry.addData("b left pwr","back left pwr: "+String.format("%.2f",BackLeft));
         telemetry.addData("leftArm ", "position: " + String.format("%.2f", leftArmPos));
         telemetry.addData("rightArm ", "position: " + String.format("%.2f", rightArmPos));
-        telemetry.addData("gyro", "angle: " + String.format("%.2f", gyro.getIntegratedZValue()));
+        telemetry.addData("gyro", "angle: " + String.format("%d", gyro.getIntegratedZValue()));
 
         // Wheel debugging.  Turn controller 2 counter-clockwise 45 degrees to activate wheels
         // individually
