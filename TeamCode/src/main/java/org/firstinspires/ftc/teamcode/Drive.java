@@ -12,10 +12,10 @@ public class Drive extends Object {
     Robot sully;
     LinearOpMode opmode;
     final double TICKS_PER_INCH = 1170 / (3.14 * 4);
-    /* 1170 ticks per wheel rotation * pi/180 radians per degree * 12" bot radius /
-     * (4*pi) inches per wheel rotation.
+    /* 1170 ticks per wheel rotation * 1 wheel rotation / (3.14 * 4) inches *
+       (3.14 * 24) inches / robot rotation * 1 robot rotation / 360 degrees
      */
-    final double TICKS_PER_DEGREE = 1170 / (180 * 3.0);
+    final double TICKS_PER_DEGREE = 1170 / 60;
     final double TOLERANCE = 1.0;
     final double SQRT2 = 1.4142;
 
@@ -50,6 +50,8 @@ public class Drive extends Object {
          * given power level.  Assumes left motors are set to FORWARD, right motors are REVERSED
          */
 
+        /* in original, xRight.setTargetPosition(-targetPosition).  This caused a left turn */
+
         int targetPosition = (int) (distance * TICKS_PER_INCH);
         stopBot();
         opmode.opModeIsActive();
@@ -57,8 +59,8 @@ public class Drive extends Object {
 
         sully.frontLeft.setTargetPosition(targetPosition);
         sully.backLeft.setTargetPosition(targetPosition);
-        sully.backRight.setTargetPosition(-targetPosition);
-        sully.frontRight.setTargetPosition(-targetPosition);
+        sully.backRight.setTargetPosition(targetPosition);
+        sully.frontRight.setTargetPosition(targetPosition);
 
         setPower(power);
 
@@ -82,10 +84,11 @@ public class Drive extends Object {
 
         setDriveMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        sully.frontLeft.setTargetPosition(-targetPosition);
-        sully.backLeft.setTargetPosition(-targetPosition);
-        sully.backRight.setTargetPosition(targetPosition);
-        sully.frontRight.setTargetPosition(targetPosition);
+        /* in original, all setTargetPositions were opposite current */
+        sully.frontLeft.setTargetPosition(targetPosition);
+        sully.backLeft.setTargetPosition(targetPosition);
+        sully.backRight.setTargetPosition(-targetPosition);
+        sully.frontRight.setTargetPosition(-targetPosition);
 
         setPower(power);
 
@@ -117,10 +120,11 @@ public class Drive extends Object {
         opmode.opModeIsActive();
         setDriveMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        sully.frontLeft.setTargetPosition(targetPosition);
-        sully.backLeft.setTargetPosition(-targetPosition);
-        sully.backRight.setTargetPosition(targetPosition);
-        sully.frontRight.setTargetPosition(-targetPosition);
+        /* in original, all setTargetPositions() were opposite current values */
+        sully.frontLeft.setTargetPosition(-targetPosition);
+        sully.backLeft.setTargetPosition(targetPosition);
+        sully.backRight.setTargetPosition(-targetPosition);
+        sully.frontRight.setTargetPosition(targetPosition);
 
         setPower(power);
 

@@ -59,7 +59,7 @@ public class DriveUnitTest extends LinearOpMode {
         initialize();
         waitForStart();
 
-        /*drive.raiseJewelArm();
+        drive.raiseJewelArm();
         sleep(500);
         drive.lowerJewelArm();
         sleep(500);
@@ -73,14 +73,20 @@ public class DriveUnitTest extends LinearOpMode {
         drive.puttRight();
         sleep(500);
 
-        drive.armsActive();
+        /*drive.armsActive();
         sleep(500);
         drive.armsOut();
         sleep(500);
+        */
 
         drive.liftUp();
         sleep(2000);
         drive.liftDown();
+        sleep(500);
+
+        drive.puttCenter();
+        sleep(500);
+        drive.raiseJewelArm();
         sleep(500);
 
         drive.straightForDistance(24,0.75);
@@ -95,7 +101,7 @@ public class DriveUnitTest extends LinearOpMode {
         drive.turnForDegrees(90,0.75);
         sleep(500);
         drive.turnForDegrees(-90, 0.75);
-        sleep(500);*/
+        sleep(500);
 
     }
 }

@@ -19,8 +19,8 @@ public class Robot extends Object {
     ModernRoboticsI2cGyro gyro;
     ColorSensor color;
 
-    final public double JEWEL_CENTER = 0.88;
-    final public double JEWEL_OFFCENTER = 0.86;   // for trying a second read of jewel color
+    final public double JEWEL_CENTER = 0.84;
+    final public double JEWEL_OFFCENTER = 0.82;   // for trying a second read of jewel color
     final public double JEWEL_LEFT = 1.00;
     final public double JEWEL_RIGHT = 0.76;
     final public double JEWEL_UP = 0.00;
@@ -48,6 +48,10 @@ public class Robot extends Object {
         jewelArm = jA;
         gyro = g;
         color = c;
+
+        frontRight.setDirection(DcMotor.Direction.REVERSE);
+        backRight.setDirection(DcMotor.Direction.REVERSE);
+        liftMotor.setDirection(DcMotor.Direction.REVERSE);
 
     }
 }

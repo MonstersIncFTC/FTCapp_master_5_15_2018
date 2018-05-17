@@ -41,7 +41,7 @@ public class sullyTelop extends OpMode {
 
     // servo values
     // grabber arms values
-    double leftArmPos = 0.0, rightArmPos = 0.0;
+    double leftArmPos = 0.93, rightArmPos = 0.93;
     //private static final double Open_Servo =  0.3 ;
     //private static final double Close_Servo =  0.7 ;
 
@@ -169,7 +169,7 @@ public class sullyTelop extends OpMode {
         rightArm.setPosition(rightArmPos);
 
         if (gamepad1.right_bumper){
-            rightArmPos += 0.01;
+            rightArmPos -= 0.01;
         }
 
         if (gamepad1.left_bumper){
@@ -177,8 +177,8 @@ public class sullyTelop extends OpMode {
         }
 
         if (gamepad1.dpad_up) {
-            leftArmPos = -1.0;
-            rightArmPos = -1.0;
+            leftArmPos = 0.93;
+            rightArmPos = 0.93;
         }
 
 
