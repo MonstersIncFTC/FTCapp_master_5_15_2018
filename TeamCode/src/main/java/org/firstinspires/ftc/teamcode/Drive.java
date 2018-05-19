@@ -11,13 +11,16 @@ public class Drive extends Object {
 
     Robot sully;
     LinearOpMode opmode;
-    final double TICKS_PER_INCH = 1170 / (3.14 * 4);
+    final double DISTANCE_FUDGE = 24/30.5;  // this factor mysteriously compensates for distances.
+    final double TICKS_PER_INCH = 1120 / (3.14 * 4) * DISTANCE_FUDGE;
+
     /* 1170 ticks per wheel rotation * 1 wheel rotation / (3.14 * 4) inches *
        (3.14 * 24) inches / robot rotation * 1 robot rotation / 360 degrees
      */
-    final double TICKS_PER_DEGREE = 1170 / 60;
+    final double ANGLE_FUDGE = 90.0/105.0;  // this factor mysteriously compensates for angles
+    final double TICKS_PER_DEGREE = 1120 / 60 * ANGLE_FUDGE;
     final double TOLERANCE = 1.0;
-    final double SQRT2 = 1.4142;
+    final double SQRT2 = 1.4142;  // just in case
 
     public Drive(Robot s, LinearOpMode op) {
 
@@ -105,7 +108,7 @@ public class Drive extends Object {
     }
 
     public void adjustTurn(double target) {
-        double error = sully.gyro.getIntegratedZValue() - target;
+        double error = target - sully.gyro.getIntegratedZValue();
         if (Math.abs(error) > TOLERANCE) {
             turnForDegrees(error, 0.3, false);
         }
@@ -116,7 +119,7 @@ public class Drive extends Object {
          * Strafes to the right for distance at power.  If distance negative, strafes left.
          */
 
-        int targetPosition = (int) (distance * TICKS_PER_INCH * SQRT2);
+        int targetPosition = (int) (distance * TICKS_PER_INCH);
 
         stopBot();
         opmode.opModeIsActive();

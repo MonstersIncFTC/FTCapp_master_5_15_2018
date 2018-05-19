@@ -7,22 +7,29 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
+
+
 /**
- * Created by JRC on 5/15/2018.
+ * Created by CCA on 5/18/2018.
  */
 
-@Autonomous(name="DriveUnitTest", group="Autonomous")
-public class DriveUnitTest extends LinearOpMode {
+@Autonomous(name="BlueLeft", group="Autonomous")
+
+public class BlueLeft extends LinearOpMode {
+    public static final String TAG = "Vuforia Vumark Sample";
+
+
 
     private Drive drive;
     private Robot sully;
+    private JewelKnocker jewelKnocker;
 
     private DcMotor frontRight, frontLeft, backRight, backLeft, liftMotor;
     private Servo rightArm, leftArm, jewelRotor, jewelArm;
     private ModernRoboticsI2cGyro gyro;
     private ColorSensor color;
-
-
+    private PictoReader pictoReader;
 
 
     public void initialize() {
@@ -42,6 +49,8 @@ public class DriveUnitTest extends LinearOpMode {
 
         sully = new Robot(frontRight,frontLeft,backRight,backLeft,liftMotor,rightArm,leftArm,jewelRotor,jewelArm,gyro,color);
         drive = new Drive(sully, this);
+        pictoReader = new PictoReader(this);
+        jewelKnocker = new JewelKnocker(this, sully, drive);
 
         jewelRotor.setPosition(sully.JEWEL_CENTER);
         jewelArm.setPosition(sully.JEWEL_UP);
@@ -54,72 +63,38 @@ public class DriveUnitTest extends LinearOpMode {
         }
 
     }
+
     @Override
     public void runOpMode() {
         initialize();
         waitForStart();
+        RelicRecoveryVuMark vuMark = pictoReader.ReadPictograph();
 
-        /*drive.raiseJewelArm();
-        sleep(500);
-        drive.lowerJewelArm();
-        sleep(500);
+        switch(vuMark) {
+            case LEFT: {
+                telemetry.addData("VuMark", "is Left");
+                break;
+            }
 
-        drive.puttLeft();
-        sleep(500);
-        drive.puttCenter();
-        sleep(500);
-        drive.puttAdjust();
-        sleep(500);
-        drive.puttRight();
-        sleep(500);
+            case RIGHT: {
+                telemetry.addData("VuMark", "is Right");
+                break;
+            }
 
-        */
-        /*drive.armsActive();
-        sleep(500);
-        drive.armsOut();
-        sleep(500);
-        */
+            case CENTER: {
+                telemetry.addData("VuMark", "is Center");
+                break;
+            }
 
-        /*drive.liftUp();
-        sleep(2000);
-        drive.liftDown();
-        sleep(500);
-        */
+            case UNKNOWN: {
+                telemetry.addData("VuMark", "not visible");
+                break;
+            }
+        }
 
-        /*
-        drive.puttCenter();
-        sleep(500);
-        drive.raiseJewelArm();
-        sleep(500);
-        */
-
-
-        /*drive.straightForDistance(24,0.25);
-        sleep(500);
-        */
-        /*drive.straightForDistance(-24,0.50);
-        sleep(500);
-        drive.strafe(24, 0.50);
-        sleep(500);
-        */
-        /*drive.strafe(-24,0.50);
-        sleep(500);
-        */
-
-        /*drive.turnForDegrees(90,0.50);
-        sleep(500);
-        drive.turnForDegrees(-90, 0.50);
-        sleep(500);*/
-        telemetry.addData("Angle: ", String.format("%d", sully.gyro.getIntegratedZValue()));
         telemetry.update();
-        drive.turnForDegrees(90,0.50);
-        sleep(500);
-        telemetry.addData("Angle: ", String.format("%d", sully.gyro.getIntegratedZValue()));
-        telemetry.update();
-        sleep(5000);
-
-
-
+        jewelKnocker.knockRed();
     }
-}
 
+
+}
