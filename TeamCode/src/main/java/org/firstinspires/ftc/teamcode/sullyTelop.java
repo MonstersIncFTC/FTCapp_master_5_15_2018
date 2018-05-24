@@ -40,23 +40,20 @@ public class sullyTelop extends OpMode {
     private final double LIFT_DOWN = -0.75;
     private final double JEWEL_UP = 0.02;
     private final double JEWEL_DOWN = 0.57;
-    private final double JEWEL_CENTER = 0.88;
+    private final double JEWEL_CENTER = 0.84;
 
     // servo values
     // grabber arms values
-    double leftArmPos = 0.80, rightArmPos = 0.93;
-    private static final double rightOpen_Servo =  0.89 ;
-    private static final double rightClose_Servo =  0.85;
-    private static final double leftOpen_Servo =  0.90 ;
-    private static final double leftClose_Servo =  1.00;
-    // jewel knocker values
-    private final double jewelArmLeft = 1.0;
-    private final double jewelArmRight = 0.76;
-    private final double jewelMiddle = 0.88;
-    private final double jewelArmUp= 0.0;
-    private final double jewelArmDown= 0.57;
-    private  double jewelArmPosition=0.0;
-    private  double jewelRotorPosition=0.0;
+
+    private static final double rightClose_Servo =  1.00 ;
+    private static final double rightOpen_Servo =  0.55;
+    private static final double rightEngage_Servo = 0.65;
+    private static final double leftClose_Servo =  0.00;
+    private static final double leftOpen_Servo =  0.45;
+    private static final double leftEngage_Servo = 0.35;
+
+    double leftArmPos = leftClose_Servo, rightArmPos = rightClose_Servo;
+
 
     // what does this do?
     public sullyTelop(){}
@@ -103,9 +100,6 @@ public class sullyTelop extends OpMode {
         jewelRotor = hardwareMap.get(Servo.class, "jewelRotor");
         jewelArm = hardwareMap.get(Servo.class, "jewelArm");
 
-        //jewelKnocker int
-       // jewelArm.setPosition(jewelArmUp);
-       // jewelRotor.setPosition(jewelMiddle);
         jewelArm.setPosition(JEWEL_UP);
         jewelRotor.setPosition(JEWEL_CENTER);
 
@@ -134,10 +128,10 @@ public class sullyTelop extends OpMode {
 
         // holonomic formulas
 
-        float FrontLeft = gamepad1LeftY - gamepad1LeftX - gamepad1RightX;
-        float FrontRight = gamepad1LeftY + gamepad1LeftX + gamepad1RightX;
-        float BackRight = gamepad1LeftY + gamepad1LeftX - gamepad1RightX;
-        float BackLeft = gamepad1LeftY - gamepad1LeftX + gamepad1RightX;
+        float FrontLeft = gamepad1LeftY - gamepad1RightX - gamepad1LeftX;
+        float FrontRight = gamepad1LeftY + gamepad1RightX + gamepad1LeftX;
+        float BackRight = gamepad1LeftY + gamepad1RightX - gamepad1LeftX;
+        float BackLeft = gamepad1LeftY - gamepad1RightX + gamepad1LeftX;
 
         //lift controls
 
@@ -164,30 +158,36 @@ public class sullyTelop extends OpMode {
 
 
         //lift inputs from controller
-        if (gamepad1.y){
+        if (gamepad2.y){
             motorMainLift.setPower(LIFT_UP);
-        } else if (gamepad1.a){
+        } else if (gamepad2.a){
             motorMainLift.setPower(LIFT_DOWN);
         }else{
             motorMainLift.setPower(0.0);
         }
 
-        // arms values need testing.
-        leftArm.setPosition(leftArmPos);
-        rightArm.setPosition(rightArmPos);
 
-        if (gamepad1.right_bumper){
+
+        if (gamepad2.right_bumper){
             rightArmPos = rightOpen_Servo;
             leftArmPos = leftOpen_Servo;
         }
 
-        if (gamepad1.left_bumper){
+        else if (gamepad2.left_bumper){
+            rightArmPos = rightEngage_Servo;
+            leftArmPos = leftEngage_Servo;
+        }
+
+        else if (gamepad2.back) {
             rightArmPos = rightClose_Servo;
             leftArmPos = leftClose_Servo;
-
         }
 
 
+
+        // arms values need testing.
+        leftArm.setPosition(leftArmPos);
+        rightArm.setPosition(rightArmPos);
 
 
 
@@ -195,11 +195,11 @@ public class sullyTelop extends OpMode {
         // grabber
 
 
-        if(gamepad1.left_trigger > .75) {
+        if(gamepad2.left_trigger > .75) {
             motorGrabberLeft.setPower(1.0);
             motorGrabberRight.setPower(-1.0);
         }
-        else if (gamepad1.right_trigger >.75){
+        else if (gamepad2.right_trigger >.75){
             motorGrabberLeft.setPower(-1.0);
             motorGrabberRight.setPower(+1.0);
         }
@@ -208,28 +208,10 @@ public class sullyTelop extends OpMode {
             motorGrabberRight.setPower(0);
         }
 
-        // Jewel Knocker game pad controls
-        /*if (gamepad1.x){
-            jewelRotorPosition += 0.01;
-        }
-
-        if (gamepad1. b){
-            jewelArmPosition += 0.01;
-        }
-
-        if (gamepad1.dpad_down) {
-            jewelArmPosition = -1.0;
-            jewelRotorPosition = -1.0;
-        }
-
-        jewelArm.setPosition(jewelArmPosition);
-        jewelRotor.setPosition(jewelRotorPosition);
-        */
-
-        if (gamepad1.x) {
+        if (gamepad2.b) {
             jewelArm.setPosition(JEWEL_UP);
         }
-        else if (gamepad1.b) {
+        else if (gamepad2.x) {
             jewelArm.setPosition(JEWEL_DOWN);
         }
 
@@ -249,7 +231,7 @@ public class sullyTelop extends OpMode {
         // Wheel debugging.  Turn controller 2 counter-clockwise 45 degrees to activate wheels
         // individually
 
-        if (gamepad2.dpad_down) {
+        /*if (gamepad2.dpad_down) {
             motorBackRight.setPower(0.75);
         }
         if (gamepad2.dpad_up) {
@@ -261,7 +243,7 @@ public class sullyTelop extends OpMode {
         if (gamepad2.dpad_right) {
             motorFrontRight.setPower(0.75);
         }
-
+        */
     }
 
 

@@ -17,7 +17,7 @@ public class DriveUnitTest extends LinearOpMode {
     private Drive drive;
     private Robot sully;
 
-    private DcMotor frontRight, frontLeft, backRight, backLeft, liftMotor;
+    private DcMotor frontRight, frontLeft, backRight, backLeft, liftMotor, leftGrabber, rightGrabber;
     private Servo rightArm, leftArm, jewelRotor, jewelArm;
     private ModernRoboticsI2cGyro gyro;
     private ColorSensor color;
@@ -31,6 +31,8 @@ public class DriveUnitTest extends LinearOpMode {
         backRight = hardwareMap.dcMotor.get("backRight");
         backLeft = hardwareMap.dcMotor.get("backLeft");
         liftMotor = hardwareMap.dcMotor.get("mainLift");
+        leftGrabber = hardwareMap.dcMotor.get("leftGrabber");
+        rightGrabber = hardwareMap.dcMotor.get("rightGrabber");
         rightArm = hardwareMap.servo.get("rightArm");
         leftArm = hardwareMap.servo.get("leftArm");
         jewelArm = hardwareMap.servo.get("jewelArm");
@@ -40,13 +42,13 @@ public class DriveUnitTest extends LinearOpMode {
 
 
 
-        sully = new Robot(frontRight,frontLeft,backRight,backLeft,liftMotor,rightArm,leftArm,jewelRotor,jewelArm,gyro,color);
+        sully = new Robot(frontRight,frontLeft,backRight,backLeft,liftMotor,leftGrabber, rightGrabber, rightArm,leftArm,jewelRotor,jewelArm,gyro,color);
         drive = new Drive(sully, this);
 
         jewelRotor.setPosition(sully.JEWEL_CENTER);
         jewelArm.setPosition(sully.JEWEL_UP);
-        leftArm.setPosition(sully.LEFT_ARM_IN);
-        rightArm.setPosition(sully.RIGHT_ARM_IN);
+        leftArm.setPosition(Robot.leftClose_Servo);
+        rightArm.setPosition(Robot.rightClose_Servo);
 
         sully.gyro.calibrate();
         while (sully.gyro.isCalibrating() && opModeIsActive()) {
@@ -94,17 +96,16 @@ public class DriveUnitTest extends LinearOpMode {
         */
 
 
-        /*drive.straightForDistance(24,0.25);
+        drive.straightForDistance(24,0.25);
         sleep(500);
-        */
-        /*drive.straightForDistance(-24,0.50);
+        drive.straightForDistance(-24,0.50);
         sleep(500);
         drive.strafe(24, 0.50);
         sleep(500);
-        */
-        /*drive.strafe(-24,0.50);
+
+        drive.strafe(-24,0.50);
         sleep(500);
-        */
+
 
         /*drive.turnForDegrees(90,0.50);
         sleep(500);

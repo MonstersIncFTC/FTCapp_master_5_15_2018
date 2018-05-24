@@ -164,18 +164,29 @@ public class Drive extends Object {
     }
 
     public void armsIn() {
-        sully.rightArm.setPosition(sully.RIGHT_ARM_IN);
-        sully.leftArm.setPosition(sully.LEFT_ARM_IN);
+        sully.rightArm.setPosition(Robot.rightClose_Servo);
+        sully.leftArm.setPosition(Robot.leftClose_Servo);
     }
 
     public void armsOut() {
-        sully.rightArm.setPosition(sully.RIGHT_ARM_OUT);
-        sully.leftArm.setPosition(sully.LEFT_ARM_OUT);
+        sully.rightArm.setPosition(Robot.rightOpen_Servo);
+        sully.leftArm.setPosition(Robot.leftOpen_Servo);
     }
 
     public void armsActive() {
-        sully.rightArm.setPosition(sully.RIGHT_ARM_ACTIVE);
-        sully.leftArm.setPosition(sully.LEFT_ARM_ACTIVE);
+        sully.rightArm.setPosition(Robot.rightEngage_Servo);
+        sully.leftArm.setPosition(Robot.leftEngage_Servo);
+    }
+
+    public void raiseLift(double distance, double power) {
+        sully.liftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        sully.liftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        sully.liftMotor.setTargetPosition((int)(distance * sully.LIFT_TICKS_PER_INCH));
+        sully.liftMotor.setPower(power);
+        while(sully.liftMotor.isBusy()) {
+            opmode.idle();
+        }
+        sully.liftMotor.setPower(0);
     }
 
     public void liftUp() {
@@ -197,5 +208,28 @@ public class Drive extends Object {
         }
         sully.liftMotor.setPower(0);
     }
+
+    public void spinIn(int milliseconds) {
+        sully.leftGrabber.setPower(-1.0);
+        sully.rightGrabber.setPower(1.0);
+        opmode.sleep(milliseconds);
+        sully.leftGrabber.setPower(0.0);
+        sully.rightGrabber.setPower(0.0);
+    }
+
+    public void spinOut(int milliseconds) {
+        sully.leftGrabber.setPower(1.0);
+        sully.rightGrabber.setPower(-1.0);
+        opmode.sleep(milliseconds);
+        sully.leftGrabber.setPower(0.0);
+        sully.rightGrabber.setPower(0.0);
+    }
+
+    public void deliverBlock() {
+        spinOut(500);
+    }
+
+
+
 }
 

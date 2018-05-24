@@ -14,7 +14,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class Robot extends Object {
 
-    DcMotor frontRight, frontLeft, backRight, backLeft, liftMotor;
+    DcMotor frontRight, frontLeft, backRight, backLeft, liftMotor, leftGrabber, rightGrabber;
     Servo rightArm, leftArm, jewelRotor, jewelArm;
     ModernRoboticsI2cGyro gyro;
     ColorSensor color;
@@ -24,19 +24,21 @@ public class Robot extends Object {
     final public double JEWEL_LEFT = 1.00;
     final public double JEWEL_RIGHT = 0.76;
     final public double JEWEL_UP = 0.00;
-    final public double JEWEL_DOWN = 0.57;
+    final public double JEWEL_DOWN = 0.55;
 
-    final public double RIGHT_ARM_IN = -0.50;
-    final public double LEFT_ARM_IN = 1.00;
-    final public double RIGHT_ARM_OUT = 0.00;
-    final public double LEFT_ARM_OUT = 0.95;
-    final public double RIGHT_ARM_ACTIVE = 0.05;
-    final public double LEFT_ARM_ACTIVE = 0.96;
+    public static final double rightClose_Servo =  1.00 ;
+    public static final double rightOpen_Servo =  0.55;
+    public static final double rightEngage_Servo = 0.65;
+    public static final double leftClose_Servo =  0.00;
+    public static final double leftOpen_Servo =  0.45;
+    public static final double leftEngage_Servo = 0.35;
 
-    final public int LIFT_UP = (int)(1170*6/(0.5*3.14159));
+
+    final public double LIFT_TICKS_PER_INCH = 1120 / (0.75*3.14159);
+    final public int LIFT_UP = (int) (6 * LIFT_TICKS_PER_INCH);
     final public int LIFT_DOWN = 0;
 
-    public Robot(DcMotor fR, DcMotor fL, DcMotor bR, DcMotor bL, DcMotor lM, Servo rA, Servo lA, Servo jR, Servo jA, ModernRoboticsI2cGyro g, ColorSensor c) {
+    public Robot(DcMotor fR, DcMotor fL, DcMotor bR, DcMotor bL, DcMotor lM, DcMotor lG, DcMotor rG, Servo rA, Servo lA, Servo jR, Servo jA, ModernRoboticsI2cGyro g, ColorSensor c) {
         frontRight = fR;
         frontLeft = fL;
         backRight = bR;
@@ -44,6 +46,8 @@ public class Robot extends Object {
         liftMotor = lM;
         leftArm = lA;
         rightArm = rA;
+        leftGrabber = lG;
+        rightGrabber = rG;
         jewelRotor = jR;
         jewelArm = jA;
         gyro = g;
