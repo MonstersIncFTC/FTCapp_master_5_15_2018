@@ -237,6 +237,18 @@ public class Drive extends Object {
 
     }
 
+    public void acquireBlock() {
+        raiseLift(7.0, 0.75);
+        armsOut();
+        opmode.sleep(500);
+        raiseLift(-7.0, 0.50);
+        //straightForDistance(2.0, 0.50);
+        armsActive();
+        opmode.sleep(500);
+        spinIn(300);
+        raiseLift(2,0.75);
+    }
+
 
 
 }
