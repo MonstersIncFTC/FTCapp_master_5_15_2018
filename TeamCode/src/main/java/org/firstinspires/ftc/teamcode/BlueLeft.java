@@ -31,10 +31,11 @@ public class BlueLeft extends LinearOpMode {
     private ColorSensor color;
     private PictoReader pictoReader;
 
-    public final double DISTANCE_TO_CRYPTOBOX = 28.0;
-    public final double LEFT_STRAFE = 3.0;
-    public final double CENTER_STRAFE = 9.0;
-    public final double RIGHT_STRAFE = 15.0;
+    public final double DISTANCE_TO_CRYPTOBOX = 26.0;
+    public final double LEFT_STRAFE = 6.0;
+    public final double CENTER_STRAFE = 12.0;
+    public final double RIGHT_STRAFE = 18.0;
+    public final double BACK_OFF = -2.0;
 
     public void initialize() {
         frontRight = hardwareMap.dcMotor.get("frontRight");
@@ -80,7 +81,7 @@ public class BlueLeft extends LinearOpMode {
 
         telemetry.update();
         jewelKnocker.knockRed();
-        drive.raiseLift(7.0, 0.50);
+        drive.raiseLift(7.0, 0.75);
         drive.armsOut();
         sleep(500);
         drive.raiseLift(-7.0, 0.50);
@@ -88,9 +89,9 @@ public class BlueLeft extends LinearOpMode {
         drive.armsActive();
         sleep(500);
         drive.spinIn(300);
+        drive.raiseLift(2,0.75);
 
 
-        /*
         drive.straightForDistance(DISTANCE_TO_CRYPTOBOX,0.5);
 
         switch(vuMark) {
@@ -119,7 +120,7 @@ public class BlueLeft extends LinearOpMode {
 
 
         }
-        */
+
 
     }
 

@@ -15,7 +15,7 @@ public class JewelKnocker extends Object {
     public final int RED = 0;
     public final int BLUE = 1;
     public final int NOT_SEEN = 2;
-    public final int COLOR_TOLERANCE = 5;
+    public final int COLOR_TOLERANCE = 1;
 
     public JewelKnocker(LinearOpMode om, Robot r, Drive d) {
         opMode = om;
@@ -26,6 +26,9 @@ public class JewelKnocker extends Object {
     public int ballColor() {
         int redValue = sully.color.red();
         int blueValue = sully.color.blue();
+        opMode.telemetry.addData("Red: ", redValue);
+        opMode.telemetry.addData("Blue: ", blueValue);
+        opMode.telemetry.update();
         if (redValue - blueValue > COLOR_TOLERANCE) {
             return RED;
         }
@@ -45,19 +48,25 @@ public class JewelKnocker extends Object {
         int ball = ballColor();
 
         if (ball == RED) {
+            opMode.telemetry.addData("Ball color: ", "RED");
             drive.puttRight();
         }
         else if (ball == BLUE) {
+            opMode.telemetry.addData("Ball color: ", "BLUE");
             drive.puttLeft();
         }
         else {
+            opMode.telemetry.addData("Ball color: ", "Not seen");
+            opMode.telemetry.update();
             if (firstTime == true) {
+                opMode.telemetry.addData("Ball color: ", "Not seen");
                 drive.puttAdjust();
                 opMode.sleep(500);
                 knockRed(false);
             }
 
         }
+        opMode.telemetry.update();
 
         drive.raiseJewelArm();
         drive.puttCenter();
@@ -70,25 +79,34 @@ public class JewelKnocker extends Object {
 
     public void knockBlue(boolean firstTime) {
         drive.lowerJewelArm();
-        opMode.sleep(200);
+        opMode.sleep(1000);
         int ball = ballColor();
 
         if (ball == BLUE) {
+            opMode.telemetry.addData("Ball color: ", "BLUE");
             drive.puttRight();
-        }
-        else if (ball == RED) {
+        } else if (ball == RED) {
+            opMode.telemetry.addData("Ball color: ", "RED");
             drive.puttLeft();
-        }
-        else {
+        } else {
+            opMode.telemetry.addData("Ball color: ", "Not seen");
+            opMode.telemetry.update();
             if (firstTime == true) {
+                opMode.telemetry.addData("Ball color: ", "Not seen");
                 drive.puttAdjust();
+                opMode.sleep(500);
                 knockRed(false);
             }
 
         }
+        opMode.telemetry.update();
 
         drive.raiseJewelArm();
         drive.puttCenter();
         opMode.sleep(400);
+    }
+
+    public void knockBlue() {
+        knockBlue(true);
     }
 }

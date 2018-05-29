@@ -149,18 +149,22 @@ public class Drive extends Object {
 
     public void puttRight() {
         sully.jewelRotor.setPosition(sully.JEWEL_RIGHT);
+        opmode.sleep(50);
     }
 
     public void puttLeft() {
         sully.jewelRotor.setPosition(sully.JEWEL_LEFT);
+        opmode.sleep(50);
     }
 
     public void puttCenter() {
         sully.jewelRotor.setPosition(sully.JEWEL_CENTER);
+        opmode.sleep(50);
     }
 
     public void puttAdjust() {
         sully.jewelRotor.setPosition(sully.JEWEL_OFFCENTER);
+        opmode.sleep(50);
     }
 
     public void armsIn() {
@@ -226,7 +230,11 @@ public class Drive extends Object {
     }
 
     public void deliverBlock() {
+        double BACK_OFF = -2.0;
         spinOut(500);
+        armsOut();
+        straightForDistance(BACK_OFF, 0.30);
+
     }
 
 

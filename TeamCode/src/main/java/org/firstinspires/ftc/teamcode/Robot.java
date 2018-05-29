@@ -20,11 +20,11 @@ public class Robot extends Object {
     ColorSensor color;
 
     final public double JEWEL_CENTER = 0.84;
-    final public double JEWEL_OFFCENTER = 0.82;   // for trying a second read of jewel color
+    final public double JEWEL_OFFCENTER = 0.81;   // for trying a second read of jewel color
     final public double JEWEL_LEFT = 1.00;
-    final public double JEWEL_RIGHT = 0.76;
+    final public double JEWEL_RIGHT = 0.74;
     final public double JEWEL_UP = 0.00;
-    final public double JEWEL_DOWN = 0.55;
+    final public double JEWEL_DOWN = 0.49;
 
     public static final double rightClose_Servo =  1.00 ;
     public static final double rightOpen_Servo =  0.55;
